@@ -6,6 +6,7 @@ public class Project {
 	
 	private String name;
 	private List<Plugin> plugins;
+	private String identifier;
 	
 	public Project(String name){
 		this.name = name;
@@ -19,12 +20,21 @@ public class Project {
 		plugins.add(plugin);
 	}
 	
+	public void setIdentifier(String identifier){
+		this.identifier = identifier;
+	}
+	
 	public String getName(){
 		return this.name;
 	}
 	
 	public List<Plugin> allPlugins(){
 		return this.plugins;
+	}
+	
+	
+	public String getIdentifier(){
+		return this.identifier;
 	}
 	
 	public String toString(){
