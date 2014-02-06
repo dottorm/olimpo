@@ -1,3 +1,7 @@
+/.target/com/olimpo/db/DbManager.class
+/.target/com/olimpo/exceptions/DbLoginException.class
+/.target/com/olimpo/models/BasicObject.class
+/doc/Packtpub.Learning.Play.Framework.2.Mar.2013.pdf
 /doc/documentation.txt
 /.target/com/olimpo/models/Plugin.class
 /doc/git_command.txt

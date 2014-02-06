@@ -2,7 +2,7 @@ package com.olimpo.models;
 
 import java.util.List;
 
-public class Admin {
+public class Admin{
 	
 	private String username;
 	private String password;
@@ -12,12 +12,7 @@ public class Admin {
 	public Admin(String username, String password, String email){
 		this.username = username;
 		this.password = password;
-		this.email = email;
-	}
-	
-	public Admin(String username, String password){
-		this.username = username;
-		this.password = password;
+		this.email = email;	
 	}
 	
 	public void setUsername(String username){

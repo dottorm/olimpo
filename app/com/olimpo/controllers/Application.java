@@ -10,7 +10,7 @@ import views.html.*;
 public class Application extends Controller {
 
     public static Result index() {
-        return ok(index.render("Funziona!!!"));
+    	return ok(index.render("Funziona!!!"));
     }
     
     public static Result provaJson(){
@@ -18,5 +18,7 @@ public class Application extends Controller {
     	messaggio.put("message", "Funziona!");
     	return ok(play.libs.Json.toJson(messaggio));
     }
+    
+    
 
 }
