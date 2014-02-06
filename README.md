@@ -1,4 +1,4 @@
 olimpo
 ======
 
-A backend as a service application based on Play Framework
+An open source backend as a service application based on Play Framework
