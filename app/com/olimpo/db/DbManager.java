@@ -2,6 +2,8 @@ package com.olimpo.db;
 
 import java.net.UnknownHostException;
 
+import play.Play;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -12,41 +14,42 @@ import com.olimpo.exceptions.DbLoginException;
 public class DbManager {
 	
 	private static DB db;
-	private static String host;
-	private static int port;
+	private static MongoClient mongoClient;
+	private static String host = Play.application().configuration().getString("olimpo.db.host");
+	private static int port = Integer.parseInt(Play.application().configuration().getString("olimpo.db.port"));
+	private static String user = Play.application().configuration().getString("olimpo.db.user");
+	private static char[] pass = Play.application().configuration().getString("olimpo.db.pass").toCharArray();
+	private static String dbname = Play.application().configuration().getString("olimpo.db.dbname");
+	 
 	
 	private DbManager(){}
 	
-	public static DB getDb(String dbname, String host, int port, String user, char[] pass) throws UnknownHostException, DbLoginException{
-		if (host == null){ 
-			DbManager.host = "localhost";
-		}else{
-			DbManager.host = host;
-		}
-		if(port == 0){
-			DbManager.port = 27017;
-		}else{
-			DbManager.port = port;
-		}
-		MongoClient mongoClient = new MongoClient(DbManager.host,DbManager.port);
+	public static DBCollection getDb() throws UnknownHostException, DbLoginException{
+		mongoClient = new MongoClient(DbManager.host,DbManager.port);
 		if(db == null){
-			db = mongoClient.getDB(dbname);
-			if(user!=null && pass.length > 0){
-				boolean connected = db.authenticate(user, pass);
+			if (!mongoClient.getDatabaseNames().contains(dbname)){
+				firstLaunch();
+			}else{
+				db = mongoClient.getDB(dbname);
+			}
+				boolean connected = db.authenticate(user,pass);
 				if (!connected){
-					System.out.println(connected);
 					throw new DbLoginException("Error during DB authentication");
 				}
-			}
 		}
-		return db;
+		return db.getCollection("olimpo");
 	}
-	/*
-	public static void main (String [] a) throws UnknownHostException, DbLoginException{
-    	char[] c = {};
-		DB db = DbManager.getDb("prova",null,0,null,c);
-		DBCollection coll = db.getCollection("collection_prova");
-		coll.insert(new BasicDBObject("nome","prova"));
-	}*/
+	
+	private static void firstLaunch(){
+		db = mongoClient.getDB("admin");
+		createUser(db);
+		db = mongoClient.getDB(dbname);
+		createUser(db);
+		db.getCollection("olimpo");
+	}
+	
+	private static void createUser(DB db){
+		db.addUser(DbManager.user, DbManager.pass);
+	}
 
 }

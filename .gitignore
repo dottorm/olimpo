@@ -1,3 +1,5 @@
+/.target/com/olimpo/dao/AdminDAO.class
+/.target/com/olimpo/util/Utils.class
 /.target/com/olimpo/db/DbManager.class
 /.target/com/olimpo/exceptions/DbLoginException.class
 /.target/com/olimpo/models/BasicObject.class

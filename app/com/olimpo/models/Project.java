@@ -1,5 +1,6 @@
 package com.olimpo.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Project {
@@ -9,7 +10,9 @@ public class Project {
 	private String identifier;
 	
 	public Project(String name){
+		plugins = new ArrayList<Plugin>();
 		this.name = name;
+		this.identifier = null;
 	}
 	
 	public void setName(String name){
